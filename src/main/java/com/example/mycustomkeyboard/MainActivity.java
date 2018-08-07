@@ -18,7 +18,9 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private KeyBoardEditText text;
+    //private KeyBoardEditText text;
+    private WarningKeyBoard text1;
+
     private KeyboardView keyboardView;
     private LinearLayout layout;
     private LinearLayout root;
@@ -31,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         //ed_main是一个自定义控件的ID，该控件可以触发自定义键盘
         //它继承自系统的EditText
-        text = (KeyBoardEditText) findViewById(R.id.ed_main);
+        //text = (KeyBoardEditText) findViewById(R.id.ed_main);
+        text1=(WarningKeyBoard) findViewById(R.id.ed_main);
 
         //下面绑定了一个键盘视图的布局文件
         keyboardView = (KeyboardView) findViewById(R.id.view_keyboard);
@@ -42,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         root = (LinearLayout) findViewById(R.id.layout_root);
 
-        text.setKeyboardType(layout, keyboardView, true);
-
-        text.setOnKeyBoardStateChangeListener(new KeyBoardEditText.OnKeyboardStateChangeListener() {
+        text1.setKeyboardType(layout, keyboardView, true);
+        text1.setOnKeyBoardStateChangeListener(new WarningKeyBoard.OnKeyboardStateChangeListener() {
             @Override
             public void show() {
                 root.post(new Runnable() {
@@ -53,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
                         int[] pos = new int[2];
                         //获取编辑框在整个屏幕中的坐标
-                        text.getLocationOnScreen(pos);
+                        text1.getLocationOnScreen(pos);
                         //编辑框的Bottom坐标和键盘Top坐标的差
-                        height = (pos[1] + text.getHeight()) -
+                        height = (pos[1] + text1.getHeight()) -
                                 (getScreenHeight(MainActivity.this) - keyboardView.getHeight());
                         if (height > 0) {
                             root.scrollBy(0, height + dp2px(MainActivity.this, 16));
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         //Log.i("zhangdi", getLngAndLat(this));
     }
 

@@ -1,7 +1,6 @@
 package com.example.mycustomkeyboard;
 
 import android.content.Context;
-import android.hardware.input.InputManager;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.support.v7.widget.AppCompatEditText;
@@ -18,12 +17,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 /**
  * Created by zd on 2018/4/2.
  */
 
-public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.OnKeyboardActionListener {
+
+public class WarningKeyBoard extends AppCompatEditText implements KeyboardView.OnKeyboardActionListener {
 
     /**数字键盘*/
     private Keyboard keyboardNumber;
@@ -45,17 +44,17 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
     private List<Integer> noLists = new ArrayList<>();
     private OnKeyboardStateChangeListener listener;
 
-    public KeyBoardEditText(Context context) {
+    public WarningKeyBoard(Context context) {
         super(context);
         initEditView();
     }
 
-    public KeyBoardEditText(Context context, AttributeSet attrs) {
+    public WarningKeyBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initEditView();
     }
 
-    public KeyBoardEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WarningKeyBoard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initEditView();
     }
@@ -63,7 +62,7 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
     /**初始化数字和字母键盘*/
     private void initEditView() {
         //将键盘布局与键盘对象进行绑定
-        keyboardNumber = new Keyboard(getContext(), R.xml.keyboard_num);
+        keyboardNumber = new Keyboard(getContext(), R.xml.warning_keybroad);
         keyboardLetter = new Keyboard(getContext(), R.xml.keyboard_letter);
 
         for (int i=0; i<arrays.length; i++) {
@@ -151,7 +150,6 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
                 break;
             default:
                 editable.insert(start, Character.toString((char)primaryCode));
-                randomKeyboardNumber();
                 break;
         }
     }
@@ -185,7 +183,7 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
         for (int i = 0; i < keyList.size(); i++)
         {
             Log.d("潘冠男", "按键的CODE值: "+keyList.get(i).codes[0]);
-           // Log.d("潘冠男", "按键的显示值: "+keyList.get(i).label.toString());
+            // Log.d("潘冠男", "按键的显示值: "+keyList.get(i).label.toString());
             //根据label属性选择Key
             //if ((keyList.get(i).label != null && keyList.get(i).codes[0] >= 48 && keyList.get(i).codes[0] <= 57 ))
             if ((keyList.get(i).label != null && isNumber(keyList.get(i)) ))
@@ -255,7 +253,7 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
             }
             else
                 for (int i = 0; i < count; i++)
-                temp.add(new KeyModel(97 + i, (char)(97+i)+""));
+                    temp.add(new KeyModel(97 + i, (char)(97+i)+""));
         }
 
         // 取数
@@ -459,11 +457,11 @@ public class KeyBoardEditText extends AppCompatEditText implements KeyboardView.
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK && (viewGroup.getVisibility() != GONE
-        || keyboardView.getVisibility() != GONE)) {
+                || keyboardView.getVisibility() != GONE)) {
             viewGroup.setVisibility(GONE);
             keyboardView.setVisibility(GONE);
             if (listener != null)
-            listener.hide();
+                listener.hide();
             return true;
         }
         return super.onKeyDown(keyCode, event);
